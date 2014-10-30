@@ -1,5 +1,5 @@
 ## DateTime Widget for [Wakanda](http://wakanda.org)
-The __Custom__ widget allows you to...
+The widget allows you to insert modify date and time trough a input field with date time selector.
 
 Website and documentation: http://xdsoft.net/jqplugins/datetimepicker/
 
