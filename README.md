@@ -1,12 +1,15 @@
-## Custom DateTime Widget for [Wakanda](http://wakanda.org)
+## DateTime Widget for [Wakanda](http://wakanda.org)
 The __Custom__ widget allows you to...
+
+Website and documentation: http://xdsoft.net/jqplugins/datetimepicker/
 
 ### Properties
 This widget has the following properties:
 
-* __Prop1__: Explain the property 1
-* __Prop2__: Explain the property 2
-* __Prop3__: Explain the property 3
+* __dateTime__: date source
+* __defaultTime__: default time
+* __step__: time step
+* __language__: date/time format
 
 ### More Information
 For more information on how to install a custom widget, refer to [Installing a Custom Widget](http://doc.wakanda.org/WakandaStudio0/help/Title/en/page3869.html#1027761).
