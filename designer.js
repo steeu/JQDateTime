@@ -17,14 +17,6 @@
 		sourceDisplay: true
     });
     
-    JQDateTime.customizeProperty('format', {
-        title: 'Date Format',
-        description: '',
-        display: true,
-        sourceTitle: '',
-		sourceDisplay: false
-    });
-    
     JQDateTime.customizeProperty('defaultTime', {
         title: 'Default Time',
         description: '',

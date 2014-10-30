@@ -1,20 +1,30 @@
 WAF.define('JQDateTime', ['waf-core/widget'], function(widget) {
 	
+	var _this;
+	
+	var format = {
+		de: {dateTime: 'd.m.Y H:i', moment: 'DD.MM.YYYY HH:mm'},
+		en: {dateTime: 'm-d-Y H:i', moment: 'MM-DD-YYYY HH:mm'},
+		fr: {dateTime: 'd/m/Y H:i', moment: 'DD/MM/YYYY HH:mm'}
+	};
+	
     var JQDateTime = widget.create('JQDateTime', {
         init: function() {
-        	
-        	var _this = this;
-        	var $node = $(this.node);
-        	
+ 
+         	var $node = $(this.node);
+       	
+        	_this = this;
+
+			// create jquery date time object
         	$node.datetimepicker({
-				format: this.format(),
+				format: format[_this.language()].dateTime,
 				defaultTime: this.defaultTime(),
 				step: this.step(),
 				lang: this.language(),
 				onChangeDateTime:function(dp,$input) {
 					var newTime = $input.val();
 					// parse custom date
-					_this.dateTime(moment(newTime, 'DD.MM.YYYY HH:mm').toDate());
+					_this.dateTime(moment(newTime, format[_this.language()].moment).toDate());
 				}
 			});
 //            /* Define a custom event */
@@ -25,12 +35,8 @@ WAF.define('JQDateTime', ['waf-core/widget'], function(widget) {
 		tagName: 'input',
     	dateTime: widget.property({
     		onChange: function(newValue) {
-    			this.node.value = moment(this.dateTime()).format('DD.MM.YYYY HH:mm');
+    			this.node.value = moment(this.dateTime()).format(format[_this.language()].moment);
             }
-    	}),
-    	format: widget.property({
-    		type: 'string',
-    		defaultValue: 'd.m.Y H:i'
     	}),
     	defaultTime: widget.property({
     		type: 'string',
