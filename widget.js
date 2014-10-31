@@ -34,7 +34,7 @@ WAF.define('JQDateTime', ['waf-core/widget'], function(widget) {
         },
 		tagName: 'input',
     	dateTime: widget.property({
-    		onChange: function(newValue) {
+    		onChange: function() {
     			this.node.value = moment(this.dateTime()).format(format[_this.language()].moment);
             }
     	}),
@@ -53,7 +53,19 @@ WAF.define('JQDateTime', ['waf-core/widget'], function(widget) {
     			en: 'English',
     			fr: 'Francias'
     		}
-    	})
+    	}),
+    	getDate: function() {
+    		return _this.dateTime();
+    	},
+    	setDate: function(value) {
+    		this.node.value = moment(value).format(format[_this.language()].moment);
+    	},
+    	getValue: function() {
+    		return this.node.value;
+    	},
+    	setValue: function(value) {
+    		this.node.value = value;
+    	}	
 //    	,
 //    	returnDate : function(){
 //    		return $(this.node).val();
