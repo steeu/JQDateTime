@@ -3,13 +3,17 @@ The widget allows you to insert modify date and time trough a input field with d
 
 Website and documentation: http://xdsoft.net/jqplugins/datetimepicker/
 
-### Properties
-This widget has the following properties:
-
+#### Properties
 * __dateTime__: date source
 * __defaultTime__: default time
 * __step__: time step
 * __language__: date/time format
+
+#### Functions
+* __getValue()__: get input field value
+* __setValue(_String_)__: set input field value
+* __getDate()__: get date (Date object)
+* __setDate(_Date_)__: set date (Date object)
 
 ### More Information
 For more information on how to install a custom widget, refer to [Installing a Custom Widget](http://doc.wakanda.org/WakandaStudio0/help/Title/en/page3869.html#1027761).
