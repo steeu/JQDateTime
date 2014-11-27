@@ -3,19 +3,21 @@
 	var _this;
 	
 	var format = {
-		de: {dateTime: 'd.m.Y H:i'},
-		en: {dateTime: 'm-d-Y H:i'},
-		fr: {dateTime: 'd/m/Y H:i'}
+		de: {dateTime: 'd.m.Y H:i', date: 'd.m.Y'},
+		en: {dateTime: 'm-d-Y H:i', date: 'm-d-Y'},
+		fr: {dateTime: 'd/m/Y H:i', date: 'd/m/Y'}
 	};
 	
-	function fromFormatToDate(value, language) {
+	function fromFormatToDate(value) {
 	    var date = new Date(),
 	        matchArr;
 
 	    if (value) {
-	        matchArr = value.match(/([0-9]{1,2})[\.\:\,\/\- ]+([0-9]{1,2})[\.\:\,\/\- ]+([0-9]{1,4})[\.\:\,\/\- ]+([0-9]{1,2})[\.\:\,\/\- ]+([0-9]{1,2})/);
+	        // match date time string
+	        matchArr = value.match(/([0-9]{1,2})[\.\:\,\/\- ]+([0-9]{1,2})[\.\:\,\/\- ]+([0-9]{1,4})[\.\:\,\/\- ]*([0-9]{1,2})?[\.\:\,\/\- ]*([0-9]{1,2})?/);
+	        // extract values
             if (Object.prototype.toString.call( matchArr ) === '[object Array]') {
-    	        if (language !== 'en') {
+    	        if (_this.language() !== 'en') {
         	        date.setDate(matchArr[1]);
                     date.setMonth(matchArr[2] - 1);
                 } else {
@@ -23,8 +25,8 @@
                     date.setMonth(matchArr[1] - 1);
                 }
                 date.setFullYear(matchArr[3]);
-                date.setHours(matchArr[4]);
-                date.setMinutes(matchArr[5]);
+                date.setHours(matchArr[4] || 0);
+                date.setMinutes(matchArr[5] || 0);
                 date.setSeconds(0);
                 date.setMilliseconds(0);
                 
@@ -33,23 +35,33 @@
 	    }
 	};
 	
-	function fromDateToFormat(value, language) {	    
-	    var days = ('0' + value.getDate()).slice(-2),
+	function fromDateToFormat(value) {
+	    var dateStr = '',
+	        days = ('0' + value.getDate()).slice(-2),
 	        months = ('0' + (value.getMonth() + 1)).slice(-2),
 	        years = value.getFullYear(),
 	        hours = ('0' + value.getHours()).slice(-2),
 	        minutes = ('0' + value.getMinutes()).slice(-2);
-	    
-	    switch(language) {
+
+        // format date
+	    switch(_this.language()) {
     		case 'de':
-    		    return days + '.' + months + '.' + years + ' ' + hours + ':' + minutes;
+    		    dateStr = days + '.' + months + '.' + years;
     			break;
     		case 'en':
-    		    return months + '-' + days + '-' + years + ' ' + hours + ':' + minutes;
+    		    dateStr = months + '-' + days + '-' + years;
     			break;
     		case 'fr':
-    		    return days + '/' + months + '/' + years + ' ' + hours + ':' + minutes;
+    		    dateStr = days + '/' + months + '/' + years;
     			break;
+    	}
+    	// result depending on timepicker
+    	if (_this.timepicker()) {
+    	    
+    	    return dateStr + ' ' + hours + ':' + minutes;
+    	} else {
+    	    
+    	    return dateStr;
     	}
 	};
 	
@@ -60,12 +72,19 @@
        	
         	_this = this;
         	
+        	// get date format
+        	if (_this.timepicker()) {
+        	    _this.dateFormat = format[_this.language()].dateTime;
+        	} else {
+        	    _this.dateFormat = format[_this.language()].date;
+        	}
+
         	// add default text field class
         	_this.addClass('waf-textField');
 
 			// create jquery date time object
         	$node.datetimepicker({
-				format: format[_this.language()].dateTime,
+				format: _this.dateFormat,
 				defaultTime: this.defaultTime(),
 				step: this.step(),
 				lang: this.language(),
@@ -73,7 +92,7 @@
 				onChangeDateTime:function(dp,$input) {
 					var newTime = $input.val();					
 					// parse custom date
-					_this.dateTime(fromFormatToDate(newTime, _this.language()));
+					_this.dateTime(fromFormatToDate(newTime));
 				}
 			});
         },
@@ -81,7 +100,7 @@
     	dateTime: widget.property({
     		onChange: function() {
                 // to formatted date 
-    			this.node.value = fromDateToFormat(this.dateTime(), _this.language());
+    			this.node.value = fromDateToFormat(this.dateTime());
             }
     	}),
     	defaultTime: widget.property({
@@ -112,7 +131,7 @@
     		return _this.dateTime();
     	},
     	setDate: function(value) {
-    		this.node.value = fromDateToFormat(value, _this.language());
+    		this.node.value = fromDateToFormat(value);
     	},
     	getValue: function() {
     		return this.node.value;
