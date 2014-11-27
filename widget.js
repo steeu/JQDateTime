@@ -1,11 +1,56 @@
-WAF.define('JQDateTime', ['waf-core/widget'], function(widget) {
+﻿WAF.define('JQDateTime', ['waf-core/widget'], function(widget) {
 	
 	var _this;
 	
 	var format = {
-		de: {dateTime: 'd.m.Y H:i', moment: 'DD.MM.YYYY HH:mm'},
-		en: {dateTime: 'm-d-Y H:i', moment: 'MM-DD-YYYY HH:mm'},
-		fr: {dateTime: 'd/m/Y H:i', moment: 'DD/MM/YYYY HH:mm'}
+		de: {dateTime: 'd.m.Y H:i'},
+		en: {dateTime: 'm-d-Y H:i'},
+		fr: {dateTime: 'd/m/Y H:i'}
+	};
+	
+	function fromFormatToDate(value, language) {
+	    var date = new Date(),
+	        matchArr;
+
+	    if (value) {
+	        matchArr = value.match(/([0-9]{1,2})[\.\:\,\/\- ]+([0-9]{1,2})[\.\:\,\/\- ]+([0-9]{1,4})[\.\:\,\/\- ]+([0-9]{1,2})[\.\:\,\/\- ]+([0-9]{1,2})/);
+            if (Object.prototype.toString.call( matchArr ) === '[object Array]') {
+    	        if (language !== 'en') {
+        	        date.setDate(matchArr[1]);
+                    date.setMonth(matchArr[2] - 1);
+                } else {
+                    date.setDate(matchArr[2]);
+                    date.setMonth(matchArr[1] - 1);
+                }
+                date.setFullYear(matchArr[3]);
+                date.setHours(matchArr[4]);
+                date.setMinutes(matchArr[5]);
+                date.setSeconds(0);
+                date.setMilliseconds(0);
+                
+                return date;
+            }
+	    }
+	};
+	
+	function fromDateToFormat(value, language) {	    
+	    var days = ('0' + value.getDate()).slice(-2),
+	        months = ('0' + (value.getMonth() + 1)).slice(-2),
+	        years = value.getFullYear(),
+	        hours = ('0' + value.getHours()).slice(-2),
+	        minutes = ('0' + value.getMinutes()).slice(-2);
+	    
+	    switch(language) {
+    		case 'de':
+    		    return days + '.' + months + '.' + years + ' ' + hours + ':' + minutes;
+    			break;
+    		case 'en':
+    		    return months + '-' + days + '-' + years + ' ' + hours + ':' + minutes;
+    			break;
+    		case 'fr':
+    		    return days + '/' + months + '/' + years + ' ' + hours + ':' + minutes;
+    			break;
+    	}
 	};
 	
     var JQDateTime = widget.create('JQDateTime', {
@@ -26,16 +71,17 @@ WAF.define('JQDateTime', ['waf-core/widget'], function(widget) {
 				lang: this.language(),
 				timepicker: this.timepicker(),
 				onChangeDateTime:function(dp,$input) {
-					var newTime = $input.val();
+					var newTime = $input.val();					
 					// parse custom date
-					_this.dateTime(moment(newTime, format[_this.language()].moment).toDate());
+					_this.dateTime(fromFormatToDate(newTime, _this.language()));
 				}
 			});
         },
 		tagName: 'input',
     	dateTime: widget.property({
     		onChange: function() {
-    			this.node.value = moment(this.dateTime()).format(format[_this.language()].moment);
+                // to formatted date 
+    			this.node.value = fromDateToFormat(this.dateTime(), _this.language());
             }
     	}),
     	defaultTime: widget.property({
@@ -66,7 +112,7 @@ WAF.define('JQDateTime', ['waf-core/widget'], function(widget) {
     		return _this.dateTime();
     	},
     	setDate: function(value) {
-    		this.node.value = moment(value).format(format[_this.language()].moment);
+    		this.node.value = fromDateToFormat(value, _this.language());
     	},
     	getValue: function() {
     		return this.node.value;

@@ -37,6 +37,7 @@
 #waf-body .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box >div >div.xdsoft_current {
 	box-shadow: none;
 	background-color: rgb(149, 79, 118);
+	color: rgb(255, 255, 255) !important;
 }
 
 #waf-body .xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_today {

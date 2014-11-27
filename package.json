@@ -3,27 +3,26 @@
     "studioName": "JQDateTime",
     "category": "Custom Widgets",
     "iconPath": "/icons/datetime.png",
-    "author": "Widget Developer",
+    "author": "Stefan Eugster",
     "contributors": [
         "Developer 1",
         "Developer 2"
     ],
     "version": "1.0.0",
-    "copyright": "(c) 2014 Widget Developer",
+    "copyright": "(c) 2014 Stefan Eugster",
     "repository": {
         "type": "git",
-        "url": "https://github.com/developer/Widget.git"
+        "url": "https://github.com/stefaneugster/JQDateTime.git"
     },
     "keywords": ["wakanda", "widget"],
-    "engines": {"wakanda": ">= 8"},
+    "engines": {"wakanda": ">= 9"},
     "license": "MIT",
     "loadDependencies": [
         {"id": "Widget_V2"},
         {"id": "JQDateTime/widget.js", "version": "1.0.0", "path": "WIDGETS_CUSTOM"},
         {"id": "JQDateTime/css/widget.css", "version": "1.0.0", "path": "WIDGETS_CUSTOM"},
-        {"id": "JQDateTime/moment/moment.js", "version": "1.0.0", "path": "WIDGETS_CUSTOM"},
-        {"id": "JQDateTime/datetimepicker/jquery.datetimepicker.js", "version": "1.0.0", "path": "WIDGETS_CUSTOM"},
-        {"id": "JQDateTime/datetimepicker/jquery.datetimepicker.css", "version": "1.0.0", "path": "WIDGETS_CUSTOM"},
+        {"id": "JQDateTime/datetimepicker/jquery.datetimepicker.js", "version": "2.3.8", "path": "WIDGETS_CUSTOM"},
+        {"id": "JQDateTime/datetimepicker/jquery.datetimepicker.css", "version": "2.3.8", "path": "WIDGETS_CUSTOM"},
         {"id": "JQDateTime/designer.js", "studioOnly": true, "version": "1.0.0", "path": "WIDGETS_CUSTOM"}
     ]
 }
