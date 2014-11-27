@@ -1,0 +1,49 @@
+
+/* wakanda widget css
+------------------------------------------------------------------------*/
+
+.waf-widget.waf-jqdatetime {
+	
+}
+
+/* jq datetime picker css
+------------------------------------------------------------------------*/
+
+#waf-body .xdsoft_datetimepicker {
+	border: none;
+	border-radius: 3px;
+	margin-top: 4px;
+}
+
+#waf-body .xdsoft_datetimepicker .xdsoft_datepicker {
+	
+}
+
+#waf-body .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box.xdsoft_scroller_box {
+	margin-top: 23px;
+	height: 176px;
+}
+
+#waf-body .xdsoft_datetimepicker .xdsoft_timepicker button.xdsoft_prev {
+	display: none;
+}
+
+#waf-body .xdsoft_datetimepicker .xdsoft_timepicker button.xdsoft_next {
+	display: none;
+}
+
+#waf-body .xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_default,
+#waf-body .xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_current,
+#waf-body .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box >div >div.xdsoft_current {
+	box-shadow: none;
+	background-color: rgb(149, 79, 118);
+}
+
+#waf-body .xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_today {
+	color: rgb(149, 79, 118);
+}
+
+#waf-body .xdsoft_datetimepicker  .xdsoft_calendar td:hover,
+#waf-body .xdsoft_datetimepicker  .xdsoft_timepicker .xdsoft_time_box >div >div:hover{
+    background: rgb(51, 53, 56) !important;
+}
