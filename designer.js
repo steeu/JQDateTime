@@ -40,7 +40,7 @@
     
     JQDateTime.addLabel({
         'defaultValue': 'Date',
-        'position': 'top'
+        'position': 'left'
     });
 });
 

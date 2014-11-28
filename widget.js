@@ -87,9 +87,10 @@
         	} else {
         	    _this.dateFormat = format[_this.language()].date;
         	}
-
         	// add default text field class
-        	_this.addClass('waf-textField');
+        	_this.node.classList.add('waf-textField');
+        	// add default label text field class
+        	_this.node.labels[0].classList.add('waf-label-textField');
 
 			// create jquery date time object
         	$node.datetimepicker({
@@ -134,7 +135,8 @@
     			en: 'English',
     			fr: 'Francias'
     		},
-    	    bindable : false
+    	    bindable : false,
+    	    defaultValue: 'en'
     	}),
     	getDate: function() {
     		return _this.dateTime();
