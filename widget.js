@@ -46,22 +46,23 @@
     		    
                 // to formatted date 
     			_this.node.value = _this.toDateTimeStr(_this.dateTime());
-            }
+            },
+            bindable: true
     	}),
     	defaultTime: widget.property({
     		type: 'string',
     		defaultValue: '09:00',
-    	    bindable : false
+    	    bindable: false
     	}),
     	step: widget.property({
      		type: 'number',
     		defaultValue: '60',
-    	    bindable : false	
+    	    bindable: false	
     	}),
     	timepicker: widget.property({
     	    type : 'boolean',
     	    defaultValue: true,
-    	    bindable : false
+    	    bindable: false
     	}),
     	language: widget.property({
     		type: 'enum',
@@ -70,7 +71,7 @@
     			en: 'English',
     			fr: 'Francias'
     		},
-    	    bindable : false,
+    	    bindable: false,
     	    defaultValue: 'en'
     	}),
     	getDate: function() {
@@ -102,6 +103,7 @@
         	    if (value) {
         	        // match date time string
         	        matchArr = value.match(/([0-9]{1,2})[\.\:\,\/\- ]+([0-9]{1,2})[\.\:\,\/\- ]+([0-9]{1,4})[\.\:\,\/\- ]*([0-9]{1,2})?[\.\:\,\/\- ]*([0-9]{1,2})?/);
+
         	        // extract values
                     if (Object.prototype.toString.call(matchArr) === '[object Array]') {
             	        if (_this.language() !== 'en') {
