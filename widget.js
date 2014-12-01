@@ -8,33 +8,36 @@
 	
     var JQDateTime = widget.create('JQDateTime', {
         init: function() {
+            try {
+            	var _this = this,
+            	    $node = $(this.node);
+            	
+            	// get date format
+            	if (_this.timepicker()) {
+            	    _this.dateFormat = format[_this.language()].dateTime;
+            	} else {
+            	    _this.dateFormat = format[_this.language()].date;
+            	}
+            	// add default text field class
+            	_this.node.classList.add('waf-textField');
+            	_this.node.nextElementSibling.classList.add('waf-label-textField');
 
-        	var _this = this,
-        	    $node = $(this.node);
-        	
-        	// get date format
-        	if (_this.timepicker()) {
-        	    _this.dateFormat = format[_this.language()].dateTime;
-        	} else {
-        	    _this.dateFormat = format[_this.language()].date;
-        	}
-        	// add default text field class
-        	_this.node.classList.add('waf-textField');
-        	_this.node.nextElementSibling.classList.add('waf-label-textField');
-
-			// create jquery date time object
-        	$node.datetimepicker({
-				format: _this.dateFormat,
-				defaultTime: this.defaultTime(),
-				step: this.step(),
-				lang: this.language(),
-				timepicker: this.timepicker(),
-				onChangeDateTime:function(dp,$input) {
-					var newTime = $input.val();					
-					// parse custom date
-					_this.dateTime(_this.toDateTimeObj(newTime));
-				}
-			});
+    			// create jquery date time object
+            	$node.datetimepicker({
+    				format: _this.dateFormat,
+    				defaultTime: this.defaultTime(),
+    				step: this.step(),
+    				lang: this.language(),
+    				timepicker: this.timepicker(),
+    				onChangeDateTime:function(dp,$input) {
+    					var newTime = $input.val();					
+    					// parse custom date
+    					_this.dateTime(_this.toDateTimeObj(newTime));
+    				}
+    			});            	
+            } catch (e) {
+            	console.log(e.message);
+            }
         },
 		tagName: 'input',
     	dateTime: widget.property({
@@ -91,62 +94,70 @@
     		_this.node.value = value;
     	},
     	toDateTimeObj: function(value) {
-     	    var _this = this,
-     	        dateObj,
-    	        matchArr;
+    	    try {
+		     	var _this = this,
+         	        dateObj,
+        	        matchArr;
 
-    	    if (value) {
-    	        // match date time string
-    	        matchArr = value.match(/([0-9]{1,2})[\.\:\,\/\- ]+([0-9]{1,2})[\.\:\,\/\- ]+([0-9]{1,4})[\.\:\,\/\- ]*([0-9]{1,2})?[\.\:\,\/\- ]*([0-9]{1,2})?/);
-    	        // extract values
-                if (Object.prototype.toString.call(matchArr) === '[object Array]') {
-        	        if (_this.language() !== 'en') {
-                        dateObj = new Date(matchArr[3], (matchArr[2] - 1), matchArr[1], matchArr[4] || 0, matchArr[5] || 0, 0, 0);
-                    } else {
-                        dateObj = new Date(matchArr[3], (matchArr[1] - 1), matchArr[2], matchArr[4] || 0, matchArr[5] || 0, 0, 0);
+        	    if (value) {
+        	        // match date time string
+        	        matchArr = value.match(/([0-9]{1,2})[\.\:\,\/\- ]+([0-9]{1,2})[\.\:\,\/\- ]+([0-9]{1,4})[\.\:\,\/\- ]*([0-9]{1,2})?[\.\:\,\/\- ]*([0-9]{1,2})?/);
+        	        // extract values
+                    if (Object.prototype.toString.call(matchArr) === '[object Array]') {
+            	        if (_this.language() !== 'en') {
+                            dateObj = new Date(matchArr[3], (matchArr[2] - 1), matchArr[1], matchArr[4] || 0, matchArr[5] || 0, 0, 0);
+                        } else {
+                            dateObj = new Date(matchArr[3], (matchArr[1] - 1), matchArr[2], matchArr[4] || 0, matchArr[5] || 0, 0, 0);
+                        }
+
+                        return dateObj;
                     }
-
-                    return dateObj;
-                }
-    	    }   	
+        	    }   
+        	} catch (e) {
+        		console.log(e.message);
+        	}	
     	},
     	toDateTimeStr: function(value) {
-    	    var _this = this,
-    	        dateStr = '',
-    	        days,
-    	        months,
-    	        years,
-    	        hours,
-    	        minutes;
+    	    try {
+		    	var _this = this,
+        	        dateStr = '',
+        	        days,
+        	        months,
+        	        years,
+        	        hours,
+        	        minutes;
 
-            // check if value is date
-            if (Object.prototype.toString.call(value) === '[object Date]') {
-                // get date values
-    	        days = ('0' + value.getDate()).slice(-2),
-    	        months = ('0' + (value.getMonth() + 1)).slice(-2),
-    	        years = value.getFullYear(),
-    	        hours = ('0' + value.getHours()).slice(-2),
-    	        minutes = ('0' + value.getMinutes()).slice(-2);
-                // format date
-        	    switch(_this.language()) {
-            		case 'de':
-            		    dateStr = days + '.' + months + '.' + years;
-            			break;
-            		case 'en':
-            		    dateStr = months + '-' + days + '-' + years;
-            			break;
-            		case 'fr':
-            		    dateStr = days + '/' + months + '/' + years;
-            			break;
+                // check if value is date
+                if (Object.prototype.toString.call(value) === '[object Date]') {
+                    // get date values
+        	        days = ('0' + value.getDate()).slice(-2),
+        	        months = ('0' + (value.getMonth() + 1)).slice(-2),
+        	        years = value.getFullYear(),
+        	        hours = ('0' + value.getHours()).slice(-2),
+        	        minutes = ('0' + value.getMinutes()).slice(-2);
+                    // format date
+            	    switch(_this.language()) {
+                		case 'de':
+                		    dateStr = days + '.' + months + '.' + years;
+                			break;
+                		case 'en':
+                		    dateStr = months + '-' + days + '-' + years;
+                			break;
+                		case 'fr':
+                		    dateStr = days + '/' + months + '/' + years;
+                			break;
+                	}
+                	// result depending on timepicker
+                	if (_this.timepicker()) {
+                	    
+                	    return dateStr + ' ' + hours + ':' + minutes;
+                	} else {
+                	    
+                	    return dateStr;
+                	}
             	}
-            	// result depending on timepicker
-            	if (_this.timepicker()) {
-            	    
-            	    return dateStr + ' ' + hours + ':' + minutes;
-            	} else {
-            	    
-            	    return dateStr;
-            	}
+        	} catch (e) {
+        		console.log(e.message);
         	}    	
     	}
     });
