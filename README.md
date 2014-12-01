@@ -1,6 +1,12 @@
 ## DateTime Widget for [Wakanda](http://wakanda.org)
 The widget allows you to insert modify date and time trough a input field with date time selector.
+
 ![JQDateTime Widget](/doc/timepicker.png?raw=true)
+
+Supported languages:
+* English
+* French
+* German
 
 Websites and documentation of used third party libraries: 
 * https://github.com/xdan/datetimepicker
