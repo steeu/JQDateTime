@@ -20,8 +20,7 @@
         	}
         	// add default text field class
         	_this.node.classList.add('waf-textField');
-        	// add default label text field class
-        	_this.node.labels[0].classList.add('waf-label-textField');
+        	_this.node.nextElementSibling.classList.add('waf-label-textField');
 
 			// create jquery date time object
         	$node.datetimepicker({
