@@ -25,10 +25,11 @@
     			// create jquery date time object
             	$node.datetimepicker({
     				format: _this.dateFormat,
-    				defaultTime: this.defaultTime(),
-    				step: this.step(),
-    				lang: this.language(),
-    				timepicker: this.timepicker(),
+    				defaultTime: _this.defaultTime(),
+    				step: _this.step(),
+    				lang: _this.language(),
+    				timepicker: _this.timepicker(),
+       				closeOnDateSelect: !_this.timepicker(),
     				onChangeDateTime:function(dp,$input) {
     					var newTime = $input.val();					
     					// parse custom date
